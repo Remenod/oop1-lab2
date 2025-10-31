@@ -1,6 +1,7 @@
 with(ArrayTools):
 
 module MyMatrix()
+    #-----------------MATRIX DATA---------------------
     option object; #define module as a class
 
     local Data::Matrix;
@@ -88,4 +89,8 @@ module MyMatrix()
         NULL; #its impossible to not print return value. Lets hate this together
     end;
 
+    #-----------------MATRIX OPERATIONS---------------
+
+
 end module:
+    
