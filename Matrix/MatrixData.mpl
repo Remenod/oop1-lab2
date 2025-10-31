@@ -83,8 +83,9 @@ module MyMatrix()
                 s := cat(s, "\n");
             end if;
         end do;
-        sprintf("%s", s);
-        #TODO fix no return bug
+        s := cat(s, "\n");
+        printf("%s", s);
+        NULL; #its impossible to not print return value. Lets hate this together
     end;
 
 end module:
