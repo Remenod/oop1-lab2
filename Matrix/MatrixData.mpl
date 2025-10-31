@@ -23,7 +23,7 @@ module MyMatrix()
 
             local i, j;
             for i from 1 to new:-Height do
-                if new:-Width != Size(v[i]) then
+                if new:-Width <> Size(v[i]) then
                     error "Ur jagged array kinda too jagged";
                 end;
 
