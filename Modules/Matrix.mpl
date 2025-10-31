@@ -91,6 +91,39 @@ module MyMatrix()
 
     #-----------------MATRIX OPERATIONS---------------
 
+    export `+`::static := proc( m1::MyMatrix, m2::MyMatrix )
+        local i, j, res;
+        if m1:-Height <> m1:-Height or m1:-Width <> m2:-Width then
+            error "Matrix dimensions must match for addition";
+        end if;
+
+        res := Matrix(m1:-Height, m1:-Width);
+        for i from 1 to m1:-Height do
+            for j from 1 to m1:-Width do
+                res[i,j] := m1[i,j] + m2[i,j];
+            end do;
+        end do;
+
+        MyMatrix(res);
+    end;
+
+    export `*`::static := proc( m1::MyMatrix, m2::MyMatrix )
+        local i, j, k, res;
+        if m1:-Width <> m2:-Height then
+            error "Number of columns of first matrix must equal number of rows of second matrix";
+        end if;
+
+        res := Matrix(m1:-Height, m2:-Width, 0);
+        for i from 1 to m1:-Height do
+            for j from 1 to m2:-Width do
+                for k from 1 to m1:-Width do
+                    res[i,j] := res[i,j] + m1[i,k] * m2[k,j];
+                end do;
+            end do;
+        end do;
+
+        MyMatrix(res);
+    end;
 
 end module:
     
