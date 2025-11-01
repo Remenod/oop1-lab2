@@ -57,6 +57,7 @@ module MyMatrix()
 
     export SetElement := proc(_self ::MyMatrix, i::posint, j::posint, value, $)
         _self[i,j] := value;
+        NULL;
     end;
 
     export `?[]` := proc(_self::MyMatrix, idx::list, value::list, $)
@@ -71,6 +72,7 @@ module MyMatrix()
         else
             error "Arguments count mismatch";
         end;
+        NULL;
     end proc;
 
     export ModulePrint := proc(_self ::MyMatrix, $)
@@ -152,6 +154,7 @@ module MyMatrix()
         _self:-Data := tmp:-Data;
         _self:-Height:= tmp:-Height;
         _self:-Width := tmp:-Width;
+        NULL;
     end;
 
 end module:
