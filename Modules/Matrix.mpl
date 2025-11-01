@@ -16,17 +16,18 @@ module MyMatrix()
     end;
 
     export ModuleCopy::static := proc(new::MyMatrix, proto::MyMatrix, v, $) #actual constructor
+        local lines, i, j, rowValues, nRows, nCols;
+
         if v :: Matrix then #coolass overloading
             new:-Height, new:-Width := Size(v);
             new:-Data := v;
-        elif v :: Array and v[1] :: Array and v[1][1] :: numeric then
-            new:-Height := Size(v);
-            new:-Width := Size(v[1]);
+        elif v :: list and v[1] :: list and v[1][1] :: numeric then
+            new:-Height := nops(v);
+            new:-Width := nops(v[1]);
             new:-Data := Matrix(new:-Height, new:-Width);
 
-            local i, j;
             for i from 1 to new:-Height do
-                if new:-Width <> Size(v[i]) then
+                if new:-Width <> nops(v[i]) then
                     error "Ur jagged array kinda too jagged";
                 end;
 
@@ -39,9 +40,29 @@ module MyMatrix()
             new:-Width := v:-Width;
             new:-Data := Matrix(v:-Data);
         elif v :: string then
-            ;#TODO
+            lines := StringTools:-Split(v, "\n");
+
+            nRows := nops(lines);
+            nCols := 0;
+
+            rowValues := StringTools:-Split(lines[1], " \t");
+            nCols := nops(rowValues);
+
+            new:-Height := nRows;
+            new:-Width := nCols;
+            new:-Data := Matrix(nRows, nCols);
+
+            for i from 1 to nRows do
+                rowValues := StringTools:-Split(lines[i], " \t");
+                if nops(rowValues) <> nCols then
+                    error "Jagged row detected in string input";
+                end if;
+                for j from 1 to nCols do
+                    new:-Data[i,j] := parse(rowValues[j]);
+                end do;
+            end do;
         else
-            error "Unsuported argument type %1", v;
+            error "Unsuported argument type %1(%2)", whattype(v), v;
         end;
     end;
 
