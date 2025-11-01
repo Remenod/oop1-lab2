@@ -9,6 +9,8 @@ module MyMatrix()
     local Height::numeric;
     local Width::numeric;
 
+    local Determinant::numeric = NULL;
+
     export ModuleApply::static := proc() #some constructor call syntax magic
        Object(MyMatrix, _passed);
     end;
@@ -66,6 +68,7 @@ module MyMatrix()
         elif nargs = 3 then
             if value[1]::numeric then
                 _self:-Data[op(idx)] := value[1];
+                _self:-Determinant := NULL;
             else
                 error "Value must be numeric";
             end;
@@ -154,8 +157,46 @@ module MyMatrix()
         _self:-Data := tmp:-Data;
         _self:-Height:= tmp:-Height;
         _self:-Width := tmp:-Width;
+        _self:-Determinant := NULL;
         NULL;
     end;
+
+    export CalcDeterminant := proc(_self::MyMatrix, $)
+        if _self:-Width <> _self:-Height then
+            error "Matrix rows and columns count are not equal";
+        end if;
+
+        if assigned(_self:-Determinant) and _self:-Determinant <> NULL then
+            return _self:-Determinant;
+        end if;
+
+        local n := _self:-Height;
+        local sum := 0;
+        local j, i, minorMatrix;
+
+        if n = 1 then
+            return _self[1,1];
+        end if;
+
+        for j from 1 to n do
+            minorMatrix := Matrix(n-1, n-1);
+            for i from 2 to n do
+                local col := 1;
+                for local k from 1 to n do
+                    if k <> j then
+                        minorMatrix[i-1, col] := _self[i,k];
+                        col := col + 1;
+                    end;
+                end;
+            end;
+
+            sum := sum + (-1)^(1+j) * _self[1,j] * MyMatrix(minorMatrix):-CalcDeterminant();
+        end;
+
+        _self:-Determinant := sum;
+        return sum;
+    end;
+
 
 end module:
     
