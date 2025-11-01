@@ -1,4 +1,4 @@
-interface(prettyprint=0): #disable maple output formating
+interface(prettyprint=0): #disable special output formating
 
 read "Modules/Matrix.mpl";
 
