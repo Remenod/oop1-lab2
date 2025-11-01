@@ -52,20 +52,26 @@ module MyMatrix()
     end;
 
     export GetElement := proc(_self ::MyMatrix, i::posint, j::posint, $)
-        return _self [i,j];
+        return _self[i,j];
     end;
 
     export SetElement := proc(_self ::MyMatrix, i::posint, j::posint, value, $)
-        _self [i,j] := value;
+        _self[i,j] := value;
     end;
 
-    export ModuleSelect := proc(_self ::MyMatrix, i::posint, j::posint, $) #indexer get
-        return _self :-Data[i,j];
-    end;
-
-    export ModuleAssign := proc(_self ::MyMatrix, i::posint, j::posint, value, $) #indexer set
-        _self :-Data[i,j] := value;
-    end;
+    export `?[]` := proc(_self::MyMatrix, idx::list, value::list, $)
+        if nargs = 2 then
+            return _self:-Data[op(idx)];
+        elif nargs = 3 then
+            if value[1]::numeric then
+                _self:-Data[op(idx)] := value[1];
+            else
+                error "Value must be numeric";
+            end;
+        else
+            error "Arguments count mismatch";
+        end;
+    end proc;
 
     export ModulePrint := proc(_self ::MyMatrix, $)
         local s, i, j;
