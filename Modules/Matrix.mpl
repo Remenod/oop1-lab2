@@ -125,5 +125,28 @@ module MyMatrix()
         MyMatrix(res);
     end;
 
+    local GetTransposedArray := proc(_self::MyMatrix, $ )
+        local res, i, j;
+        res := Matrix(_self:-Width, _self:-Height);
+
+        for i from 1 to _self:-Height do
+            for j from 1 to _self:-Width do
+            res[j, i] := _self:-Data[i, j];
+            end;
+        end;
+         return res;
+    end;
+
+    export GetTransposedCopy := proc(_self::MyMatrix, $ )
+        return MyMatrix(_self:-GetTransposedArray());
+    end;
+
+    export TransposeMe := proc(_self::MyMatrix, $ )
+        local tmp := _self:-GetTransposedCopy();
+        _self:-Data := tmp:-Data;
+        _self:-Height:= tmp:-Height;
+        _self:-Width := tmp:-Width;
+    end;
+
 end module:
     
