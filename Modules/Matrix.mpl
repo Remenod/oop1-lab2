@@ -62,6 +62,10 @@ module MyMatrix()
         NULL;
     end;
 
+    export GetData := proc(_self::MyMatrix, $)
+        return Matrix(_self:-Height, _self:-Width, (i,j) -> _self[i,j]);
+    end;
+
     export `?[]` := proc(_self::MyMatrix, idx::list, value::list, $)
         if nargs = 2 then
             return _self:-Data[op(idx)];
