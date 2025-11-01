@@ -91,7 +91,7 @@ module MyMatrix()
 
     #-----------------MATRIX OPERATIONS---------------
 
-    export `+`::static := proc( m1::MyMatrix, m2::MyMatrix )
+    export `+`::static := proc( m1::MyMatrix, m2::MyMatrix, $ )
         local i, j, res;
         if m1:-Height <> m1:-Height or m1:-Width <> m2:-Width then
             error "Matrix dimensions must match for addition";
@@ -107,7 +107,7 @@ module MyMatrix()
         MyMatrix(res);
     end;
 
-    export `*`::static := proc( m1::MyMatrix, m2::MyMatrix )
+    export `*`::static := proc( m1::MyMatrix, m2::MyMatrix, $ )
         local i, j, k, res;
         if m1:-Width <> m2:-Height then
             error "Number of columns of first matrix must equal number of rows of second matrix";
