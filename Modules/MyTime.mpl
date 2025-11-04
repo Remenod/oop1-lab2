@@ -62,12 +62,12 @@ module MyTime()
         _self:-ValidateData();
     end;
 
-    export `-`::static := proc(t1::MyTime, t2::MyTime, $)
-        return MyTime(t1:-seconds - t2:-seconds);
+    export `minus`::static := proc(t1::MyTime, t2::MyTime, $) # idk why but `-` proc name works poorly
+        return t1:-seconds - t2:-seconds;
     end;
 
     export `+`::static := proc(t1::MyTime, t2::MyTime, $)
-        return MyTime(t1:-seconds + t2:-seconds);
+        return t1:-seconds + t2:-seconds;
     end;
 
     export WhatLesson := proc(_self::MyTime)
