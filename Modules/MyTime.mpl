@@ -60,6 +60,10 @@ module MyTime()
         return MyTime(t1:-seconds - t2:-seconds);
     end;
 
+    export `+`::static := proc(t1::MyTime, t2::MyTime, $)
+        return MyTime(t1:-seconds + t2:-seconds);
+    end;
+
     export WhatLesson := proc(_self::MyTime)
         if   _self:-seconds < 60*480  then return "пари ще не почалися";
         elif _self:-seconds < 60*560  then return "1-а пара";
