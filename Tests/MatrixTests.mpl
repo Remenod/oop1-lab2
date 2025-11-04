@@ -48,7 +48,7 @@ TestDeterminant := proc(mat::Matrix, silent::boolean, $)
 end:
 
 AutoTestDeterminant := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $)
-    local i, j, passedTestsests;
+    local i, j, passedTests;
     passedTests := 0;
     for i from matricesSize[1] to matricesSize[2] do
         if not silent then
@@ -89,7 +89,7 @@ TestTranspose := proc(mat::Matrix, silent::boolean, $)
 end:
 
 AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $)
-    local i, j, passedTestsests;
+    local i, j, passedTests;
     passedTests := 0;
     for i from matricesSize[1] to matricesSize[2] do
         if not silent then
