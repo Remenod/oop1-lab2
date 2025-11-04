@@ -153,7 +153,7 @@ module MyMatrix()
         for i from 1 to m1:-Height do
             for j from 1 to m2:-Width do
                 for k from 1 to m1:-Width do
-                    res[i,j] := res[i,j] + m1[i,k] * m2[k,j];
+                    res[i,j] += m1[i,k] * m2[k,j];
                 end do;
             end do;
         end do;
@@ -210,12 +210,12 @@ module MyMatrix()
                 for local k from 1 to n do
                     if k <> j then
                         minorMatrix[i-1, col] := _self[i,k];
-                        col := col + 1;
+                        col += 1;
                     end;
                 end;
             end;
 
-            sum := sum + (-1)^(1+j) * _self[1,j] * MyMatrix(minorMatrix):-CalcDeterminant();
+            sum += (-1)^(1+j) * _self[1,j] * MyMatrix(minorMatrix):-CalcDeterminant();
         end;
 
         _self:-Determinant := sum;
