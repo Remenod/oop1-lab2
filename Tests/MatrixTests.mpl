@@ -104,7 +104,7 @@ AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::nume
     printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:
 
-TestAdd := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
+TestMatrixAdd := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
     local myAdd, libAdd, myMat1, myMat2;
     myMat1 := MyMatrix(mat1);
     myMat2 := MyMatrix(mat2);
@@ -131,7 +131,7 @@ TestAdd := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
     end;
 end:
 
-AutoTestAdd := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $)
+AutoTestMatrixAdd := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $)
     local i, j, passedTests;
     passedTests := 0;
     for i from matricesSize[1] to matricesSize[2] do
@@ -139,7 +139,7 @@ AutoTestAdd := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, s
             printf("\nN: %d", i);
         end;
         for j from 1 to eachSizeTest do
-            if TestAdd(RandMatrix(i, valRange), RandMatrix(i, valRange), silent) then
+            if TestMatrixAdd(RandMatrix(i, valRange), RandMatrix(i, valRange), silent) then
                 passedTests := passedTests + 1;
             end;
         end;
@@ -147,7 +147,7 @@ AutoTestAdd := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, s
     printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:
 
-TestMultiply := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
+TestMatrixMultiply := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
     local myMul, libMul, myMat1, myMat2;
     myMat1 := MyMatrix(mat1);
     myMat2 := MyMatrix(mat2);
@@ -174,7 +174,7 @@ TestMultiply := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
     end;
 end:
 
-AutoTestMultiply := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $ )
+AutoTestMatrixMultiply := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $ )
     local i, j, passedTests;
     passedTests := 0;
     for i from matricesSize[1] to matricesSize[2] do
@@ -182,7 +182,7 @@ AutoTestMultiply := proc(valRange::list, matricesSize::list, eachSizeTest::numer
             printf("\nN: %d", i);
         end;
         for j from 1 to eachSizeTest do
-            if TestMultiply(RandMatrix(i, valRange), RandMatrix(i, valRange), silent) then
+            if TestMatrixMultiply(RandMatrix(i, valRange), RandMatrix(i, valRange), silent) then
                 passedTests := passedTests + 1;
             end;
         end;
