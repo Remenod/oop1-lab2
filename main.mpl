@@ -8,12 +8,16 @@ t;
 t:-WhatLesson();
 t:-TimeSinceMidnight();
 
-# f := MyMatrix("1 2 3\n4 5 6"):
-# b := MyMatrix(Matrix([[1,2],[2,3]])):
-# g := MyMatrix([[1,2],[2,3],[5,7],[7,0]]):
-# f;
-# b;
-# g;
+a := (t + t);
+a:-TimeSinceMidnight();
+
+f := MyMatrix("1 2 3\n4 5 6"):
+b := MyMatrix(Matrix([[1,2],[2,3]])):
+g := MyMatrix([[1,2],[2,3],[5,7],[7,0]]):
+f;
+b;
+g;
+g + g;
 
 # f:-TransposeMe();
 # f;
@@ -24,6 +28,8 @@ t:-TimeSinceMidnight();
 #     end;
 # end;
 
-# read "Tests/MatrixTests.mpl";
-# AutoTestDeterminant([-100, 100], [1, 6], 3);
-# AutoTestTranspose([-100, 100], [1, 10], 3);
+read "Tests/MatrixTests.mpl";
+# AutoTestMultiply([-100, 100], [1, 30], 5, true);
+# AutoTestAdd([-100, 100], [1, 60], 5, true);
+AutoTestDeterminant([-100, 100], [1, 6], 3, true);
+AutoTestTranspose([-100, 100], [1, 10], 3, true);

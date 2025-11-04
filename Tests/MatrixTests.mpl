@@ -103,3 +103,89 @@ AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::nume
     end;
     printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:
+
+TestAdd := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
+    local myAdd, libAdd, myMat1, myMat2;
+    myMat1 := MyMatrix(mat1);
+    myMat2 := MyMatrix(mat2);
+    if not silent then
+        printf("\n");
+        print(myMat1);
+        print(myMat2);
+    end;
+    myAdd := (myMat1 + myMat2):-GetData();
+    libAdd := mat1 + mat2;
+    if not silent then
+        print(cat("MyMatrix: ", myAdd));
+        print(cat("Maple Lib: ", libAdd));
+    end;
+    
+    if MatricesEqual(myAdd, libAdd) then
+        if not silent then
+            print("Test passed");
+        end;
+        return true;
+    else
+        print("!!!!!TEST FAILED!!!!!");
+        return false;
+    end;
+end:
+
+AutoTestAdd := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $)
+    local i, j, passedTests;
+    passedTests := 0;
+    for i from matricesSize[1] to matricesSize[2] do
+        if not silent then
+            printf("\nN: %d", i);
+        end;
+        for j from 1 to eachSizeTest do
+            if TestAdd(RandMatrix(i, valRange), RandMatrix(i, valRange), silent) then
+                passedTests := passedTests + 1;
+            end;
+        end;
+    end;
+    printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
+end:
+
+TestMultiply := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
+    local myMul, libMul, myMat1, myMat2;
+    myMat1 := MyMatrix(mat1);
+    myMat2 := MyMatrix(mat2);
+    if not silent then
+        printf("\n");
+        print(myMat1);
+        print(myMat2);
+    end;
+    myMul := (myMat1 * myMat2):-GetData();
+    libMul := mat1 . mat2;
+    if not silent then
+        print(cat("MyMatrix: ", myMul));
+        print(cat("Maple Lib: ", libMul));
+    end;
+    
+    if MatricesEqual(myMul, libMul) then
+        if not silent then
+            print("Test passed");
+        end;
+        return true;
+    else
+        print("!!!!!TEST FAILED!!!!!");
+        return false;
+    end;
+end:
+
+AutoTestMultiply := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $ )
+    local i, j, passedTests;
+    passedTests := 0;
+    for i from matricesSize[1] to matricesSize[2] do
+        if not silent then
+            printf("\nN: %d", i);
+        end;
+        for j from 1 to eachSizeTest do
+            if TestMultiply(RandMatrix(i, valRange), RandMatrix(i, valRange), silent) then
+                passedTests := passedTests + 1;
+            end;
+        end;
+    end;
+    printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
+end:
