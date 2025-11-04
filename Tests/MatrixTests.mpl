@@ -4,7 +4,7 @@ RandMatrix := proc(n::posint, valRange::list, $)
     local i, j, randInt;
     randInt := rand(valRange[1]..valRange[2]);
     return Matrix(n, n, (i,j) -> randInt());
-end;
+end:
 
 MatricesEqual := proc(A::Matrix, B::Matrix)
     local i,j;
@@ -40,7 +40,7 @@ TestDeterminant := proc(mat::Matrix)
         print("!!!!!TEST FAILED!!!!!");
         return false;
     end;
-end;
+end:
 
 AutoTestDeterminant := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, $)
     local i, j, passedTestsests;
@@ -54,7 +54,7 @@ AutoTestDeterminant := proc(valRange::list, matricesSize::list, eachSizeTest::nu
         end;
     end;
     printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
-end;
+end:
 
 TestTranspose := proc(mat::Matrix)
     local myTrs, libTrs, myMat;
@@ -74,7 +74,7 @@ TestTranspose := proc(mat::Matrix)
         print("!!!!!TEST FAILED!!!!!");
         return false;
     end;
-end;
+end:
 
 AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, $)
     local i, j, passedTestsests;
@@ -88,4 +88,4 @@ AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::nume
         end;
     end;
     printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
-end;
+end:
