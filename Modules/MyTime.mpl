@@ -89,6 +89,4 @@ module MyTime()
         end;
         return "пари вже скінчилися";
     end;
-
-
 end:
