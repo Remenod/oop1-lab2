@@ -15,56 +15,70 @@ module MyMatrix()
        Object(MyMatrix, _passed);
     end;
 
-    export ModuleCopy::static := proc(new::MyMatrix, proto::MyMatrix, v, $) #actual constructor
-        local lines, i, j, rowValues, nRows, nCols;
+    #actual constructor
+    export ModuleCopy::static := overload(
+        [
+            proc(new::MyMatrix, proto::MyMatrix, v::Matrix, $)
+            option overload;
+                new:-Height, new:-Width := Size(v);
+                new:-Data := v;
+            end,
 
-        if v :: Matrix then #coolass overloading
-            new:-Height, new:-Width := Size(v);
-            new:-Data := v;
-        elif v :: list and v[1] :: list and v[1][1] :: numeric then
-            new:-Height := nops(v);
-            new:-Width := nops(v[1]);
-            new:-Data := Matrix(new:-Height, new:-Width);
+            proc(new::MyMatrix, proto::MyMatrix, v::list, $)
+            option overload;
+                local i, j;
+                if v :: list and v[1] :: list and v[1][1] :: numeric then
+                    new:-Height := nops(v);
+                    new:-Width := nops(v[1]);
+                    new:-Data := Matrix(new:-Height, new:-Width);
 
-            for i from 1 to new:-Height do
-                if new:-Width <> nops(v[i]) then
-                    error "Ur jagged array kinda too jagged";
+                    for i from 1 to new:-Height do
+                        if new:-Width <> nops(v[i]) then
+                            error "Ur jagged array kinda too jagged";
+                        end;
+
+                        for j from 1 to new:-Width do
+                            new:-Data[i,j] := v[i][j];
+                        end;
+                    end;
+                else
+                    error "Unsuported argument type %1(%2)", whattype(v), v;
                 end;
+            end,
 
-                for j from 1 to new:-Width do
-                    new:-Data[i,j] := v[i][j];
-                end;
-            end;
-        elif v :: MyMatrix then
-            new:-Height := v:-Height;
-            new:-Width := v:-Width;
-            new:-Data := Matrix(v:-Data);
-        elif v :: string then
-            lines := StringTools:-Split(v, "\n");
+            proc(new::MyMatrix, proto::MyMatrix, v::MyMatrix, $)
+            option overload;
+                new:-Height := v:-Height;
+                new:-Width := v:-Width;
+                new:-Data := Matrix(v:-Data);
+            end,
 
-            nRows := nops(lines);
-            nCols := 0;
+            proc(new::MyMatrix, proto::MyMatrix, v::string, $)
+                local lines, i, j, rowValues, nRows, nCols;
+                lines := StringTools:-Split(v, "\n");
 
-            rowValues := StringTools:-Split(lines[1], " \t");
-            nCols := nops(rowValues);
+                nRows := nops(lines);
+                nCols := 0;
 
-            new:-Height := nRows;
-            new:-Width := nCols;
-            new:-Data := Matrix(nRows, nCols);
+                rowValues := StringTools:-Split(lines[1], " \t");
+                nCols := nops(rowValues);
 
-            for i from 1 to nRows do
-                rowValues := StringTools:-Split(lines[i], " \t");
-                if nops(rowValues) <> nCols then
-                    error "Jagged row detected in string input";
-                end if;
-                for j from 1 to nCols do
-                    new:-Data[i,j] := parse(rowValues[j]);
+                new:-Height := nRows;
+                new:-Width := nCols;
+                new:-Data := Matrix(nRows, nCols);
+
+                for i from 1 to nRows do
+                    rowValues := StringTools:-Split(lines[i], " \t");
+                    if nops(rowValues) <> nCols then
+                        error "Jagged row detected in string input";
+                    end if;
+                    for j from 1 to nCols do
+                        new:-Data[i,j] := parse(rowValues[j]);
+                    end do;
                 end do;
-            end do;
-        else
-            error "Unsuported argument type %1(%2)", whattype(v), v;
-        end;
-    end;
+            end
+        ]
+    ):
 
     export GetHeight := proc(_self ::MyMatrix, $)
         return _self :-Height;

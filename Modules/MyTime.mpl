@@ -15,16 +15,19 @@ module MyTime()
        Object(MyTime, _passed);
     end;
 
-    export ModuleCopy::static := proc(new::MyTime, proto::MyTime)
-        if nargs = 3 then
-            new:-seconds := _passed[3];
-        elif nargs = 5 then
-            new:-seconds := _passed[3]*60*60 + _passed[4]*60 + _passed[5];
-        else
-            error "Wrong arguments count";
-        end;
-        new:-ValidateData();
-    end;
+    export ModuleCopy::static := overload(
+        [
+            proc(new::MyTime, proto::MyTime, s::integer, $)
+            option overload;
+                new:-seconds := s;
+                new:-ValidateData();
+            end,
+            proc(new::MyTime, proto::MyTime, h::integer, m::integer, s::integer, $)
+                new:-seconds := h*60*60 + m*60 + s;
+                new:-ValidateData();
+            end
+        ]
+    ):
 
     export ModulePrint := proc(_self::MyTime, $)
         local secs, h, m, s;
