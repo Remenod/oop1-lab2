@@ -6,7 +6,7 @@ RandMatrix := proc(n::posint, valRange::list, $)
     return Matrix(n, n, (i,j) -> randInt());
 end:
 
-MatricesEqual := proc(A::Matrix, B::Matrix)
+MatricesEqual := proc(A::Matrix, B::Matrix, $)
     local i,j;
     if RowDimension(A) <> RowDimension(B) or ColumnDimension(A) <> ColumnDimension(B) then
         return false;
@@ -22,19 +22,24 @@ MatricesEqual := proc(A::Matrix, B::Matrix)
 end:
 
 
-TestDeterminant := proc(mat::Matrix)
+TestDeterminant := proc(mat::Matrix, silent::boolean, $)
     local myDet, libDet, myMat;
     myMat := MyMatrix(mat);
-    printf("\n");
-    print(myMat);
+    if not silent then
+        printf("\n");
+        print(myMat);
+    end;
     myDet := myMat:-CalcDeterminant();
     libDet := Determinant(mat);
-    
-    print(cat("MyMatrix: ", myDet));
-    print(cat("Maple Lib: ", libDet));
+    if not silent then
+        print(cat("MyMatrix: ", myDet));
+        print(cat("Maple Lib: ", libDet));
+    end;
     
     if evalb(myDet = libDet) then
-        print("Test passed");
+        if not silent then
+            print("Test passed");
+        end;
         return true;
     else
         print("!!!!!TEST FAILED!!!!!");
@@ -42,13 +47,15 @@ TestDeterminant := proc(mat::Matrix)
     end;
 end:
 
-AutoTestDeterminant := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, $)
+AutoTestDeterminant := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $)
     local i, j, passedTestsests;
     passedTests := 0;
     for i from matricesSize[1] to matricesSize[2] do
-        printf("\nN: %d", i);
+        if not silent then
+            printf("\nN: %d", i);
+        end;
         for j from 1 to eachSizeTest do
-            if TestDeterminant(RandMatrix(i, valRange)) then 
+            if TestDeterminant(RandMatrix(i, valRange), silent) then 
                 passedTests := passedTests + 1;  
             end;
         end;
@@ -56,19 +63,24 @@ AutoTestDeterminant := proc(valRange::list, matricesSize::list, eachSizeTest::nu
     printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:
 
-TestTranspose := proc(mat::Matrix)
+TestTranspose := proc(mat::Matrix, silent::boolean, $)
     local myTrs, libTrs, myMat;
     myMat := MyMatrix(mat);
-    printf("\n");
-    print(myMat);
+    if not silent then
+        printf("\n");
+        print(myMat);
+    end;
     myTrs := myMat:-GetTransposedCopy():-GetData();
     libTrs := Transpose(mat);
-    
-    print(cat("MyMatrix: ", myTrs));
-    print(cat("Maple Lib: ", libTrs));
+    if not silent then
+        print(cat("MyMatrix: ", myTrs));
+        print(cat("Maple Lib: ", libTrs));
+    end;
     
     if MatricesEqual(myTrs, libTrs) then
-        print("Test passed");
+        if not silent then
+            print("Test passed");
+        end;
         return true;
     else
         print("!!!!!TEST FAILED!!!!!");
@@ -76,13 +88,15 @@ TestTranspose := proc(mat::Matrix)
     end;
 end:
 
-AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, $)
+AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::numeric, silent::boolean, $)
     local i, j, passedTestsests;
     passedTests := 0;
     for i from matricesSize[1] to matricesSize[2] do
-        printf("\nN: %d", i);
+        if not silent then
+            printf("\nN: %d", i);
+        end;
         for j from 1 to eachSizeTest do
-            if TestTranspose(RandMatrix(i, valRange)) then
+            if TestTranspose(RandMatrix(i, valRange), silent) then
                 passedTests := passedTests + 1;  
             end;
         end;
