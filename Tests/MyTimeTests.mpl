@@ -67,7 +67,7 @@ TestTimeMinus := proc(s1::integer, s2::integer, expect::integer, silent::boolean
     local t1, t2, result;
     t1 := MyTime(s1);
     t2 := MyTime(s2);
-    result := t1 minus t2;
+    result := t1 - t2;
 
     if not silent then
         print(cat("Result: ", result));

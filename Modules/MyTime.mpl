@@ -65,13 +65,21 @@ module MyTime()
         _self:-ValidateData();
     end;
 
-    export `minus`::static := proc(t1::MyTime, t2::MyTime, $) # idk why but `-` proc name works poorly
-        return t1:-seconds - t2:-seconds;
+    export `-`::static := proc(t::MyTime, $)
+        return -(t:-seconds);
     end;
 
-    export `+`::static := proc(t1::MyTime, t2::MyTime, $)
-        return t1:-seconds + t2:-seconds;
-    end;
+    export `+`::static := overload(
+        [
+            proc(t1::MyTime, t2::MyTime, $)
+                option overload;
+                return t1:-seconds + t2:-seconds;
+            end,
+            proc(t1::MyTime, t2::integer, $)
+                return t1:-seconds + t2;
+            end
+        ]
+    );
 
     export WhatLesson := proc(_self::MyTime)
         if   _self:-seconds < 60*480  then return "пари ще не почалися";

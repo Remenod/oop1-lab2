@@ -19,7 +19,7 @@ k;
 t:-WhatLesson();
 k:-TimeSinceMidnight();
 
-a := t minus k;
+a := t - k;
 a := t + k;
 
 
@@ -56,6 +56,6 @@ AutoTestDeterminant([-100, 100], [1, 6], 3, true);
 AutoTestTranspose([-100, 100], [1, 10], 3, true);
 
 # MyTime Auto Tests
-AutoTestCopy(10, false);
-AutoTestTimeAdd(50, false);
-AutoTestTimeMinus(50, false);
+AutoTestCopy(10, true);
+AutoTestTimeAdd(50, true);
+AutoTestTimeMinus(50, true);
