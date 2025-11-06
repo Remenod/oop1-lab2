@@ -42,7 +42,9 @@ TestDeterminant := proc(mat::Matrix, silent::boolean, $)
         end;
         return true;
     else
-        print("!!!!!TEST FAILED!!!!!");
+        if not silent then
+            print("!!!!!TEST FAILED!!!!!");
+        end;
         return false;
     end;
 end:
@@ -60,7 +62,7 @@ AutoTestDeterminant := proc(valRange::list, matricesSize::list, eachSizeTest::nu
             end;
         end;
     end;
-    printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
+    printf("[AutoTestDeterminant] %d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:
 
 TestTranspose := proc(mat::Matrix, silent::boolean, $)
@@ -83,7 +85,9 @@ TestTranspose := proc(mat::Matrix, silent::boolean, $)
         end;
         return true;
     else
-        print("!!!!!TEST FAILED!!!!!");
+        if not silent then
+            print("!!!!!TEST FAILED!!!!!");
+        end;
         return false;
     end;
 end:
@@ -101,7 +105,7 @@ AutoTestTranspose := proc(valRange::list, matricesSize::list, eachSizeTest::nume
             end;
         end;
     end;
-    printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
+    printf("[AutoTestTranspose] %d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:
 
 TestMatrixAdd := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
@@ -126,7 +130,9 @@ TestMatrixAdd := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
         end;
         return true;
     else
-        print("!!!!!TEST FAILED!!!!!");
+        if not silent then
+            print("!!!!!TEST FAILED!!!!!");
+        end;
         return false;
     end;
 end:
@@ -144,7 +150,7 @@ AutoTestMatrixAdd := proc(valRange::list, matricesSize::list, eachSizeTest::nume
             end;
         end;
     end;
-    printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
+    printf("[AutoTestMatrixAdd] %d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:
 
 TestMatrixMultiply := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
@@ -169,7 +175,9 @@ TestMatrixMultiply := proc(mat1::Matrix, mat2::Matrix, silent::boolean, $)
         end;
         return true;
     else
-        print("!!!!!TEST FAILED!!!!!");
+        if not silent then
+            print("!!!!!TEST FAILED!!!!!");
+        end;
         return false;
     end;
 end:
@@ -187,5 +195,5 @@ AutoTestMatrixMultiply := proc(valRange::list, matricesSize::list, eachSizeTest:
             end;
         end;
     end;
-    printf("%d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
+    printf("[AutoTestMatrixMultiply] %d/%d tests are passed\n", passedTests, (matricesSize[2]-matricesSize[1]+1)*eachSizeTest);
 end:

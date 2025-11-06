@@ -50,12 +50,14 @@ end;
 #------Tests-------------------
 
 # Matrix Auto Tests
-AutoTestMatrixMultiply([-100, 100], [1, 30], 5, true);
-AutoTestMatrixAdd([-100, 100], [1, 60], 5, true);
-AutoTestDeterminant([-100, 100], [1, 6], 3, true);
-AutoTestTranspose([-100, 100], [1, 10], 3, true);
+t1 := Threads:-Create(AutoTestMatrixMultiply([-100, 100], [1, 30], 5, true)):
+t2 := Threads:-Create(AutoTestMatrixAdd([-100, 100], [1, 60], 5, true)):
+t3 := Threads:-Create(AutoTestDeterminant([-100, 100], [1, 6], 3, true)):
+t4 := Threads:-Create(AutoTestTranspose([-100, 100], [1, 10], 3, true)):
 
 # MyTime Auto Tests
-AutoTestCopy(10, true);
-AutoTestTimeAdd(50, true);
-AutoTestTimeMinus(50, true);
+t5 := Threads:-Create(AutoTestCopy(10, true)):
+t6 := Threads:-Create(AutoTestTimeAdd(50, true)):
+t7 := Threads:-Create(AutoTestTimeMinus(50, true)):
+
+Threads:-Wait(t1, t2, t3, t4, t5, t6, t7);

@@ -17,7 +17,9 @@ TestCopy := proc(silent::boolean, $)
         if not silent then print("Test passed"); end;
         return true;
     else
-        print("!!!!!TEST FAILED!!!!!");
+        if not silent then
+            print("!!!!!TEST FAILED!!!!!");
+        end;
         return false;
     end;
 end:
@@ -28,7 +30,7 @@ AutoTestCopy := proc(times::posint, silent::boolean, $)
     for i from 1 to times do
         if TestCopy(silent) then passed := passed+1; end;
     end;
-    printf("%d/%d tests are passed\n", passed, times);
+    printf("[AutoTestCopy] %d/%d tests are passed\n", passed, times);
 end:
 
 TestTimeAdd := proc(s::integer, delta::integer, expect::integer, silent::boolean, $)
@@ -45,7 +47,9 @@ TestTimeAdd := proc(s::integer, delta::integer, expect::integer, silent::boolean
         if not silent then print("Test passed"); end;
         return true;
     else
-        print("!!!!!TEST FAILED!!!!!");
+        if not silent then
+            print("!!!!!TEST FAILED!!!!!");
+        end;
         return false;
     end;
 end:
@@ -60,7 +64,7 @@ AutoTestTimeAdd := proc(times::posint, silent::boolean, $)
         if expect < 0 then expect := expect + 24*60*60; end;
         if TestTimeAdd(s, d, expect, silent) then passed := passed+1; end;
     end;
-    printf("%d/%d tests are passed\n", passed, times);
+    printf("[AutoTestTimeAdd] %d/%d tests are passed\n", passed, times);
 end:
 
 TestTimeMinus := proc(s1::integer, s2::integer, expect::integer, silent::boolean, $)
@@ -78,7 +82,9 @@ TestTimeMinus := proc(s1::integer, s2::integer, expect::integer, silent::boolean
         if not silent then print("Test passed"); end;
         return true;
     else
-        print("!!!!!TEST FAILED!!!!!");
+        if not silent then
+            print("!!!!!TEST FAILED!!!!!");
+        end;
         return false;
     end;
 end:
@@ -91,5 +97,5 @@ AutoTestTimeMinus := proc(times::posint, silent::boolean, $)
         b := rand(0..86399)();
         if TestTimeMinus(a, b, a-b, silent) then passed := passed+1; end;
     end;
-    printf("%d/%d tests are passed\n", passed, times);
+    printf("[AutoTestTimeMinus] %d/%d tests are passed\n", passed, times);
 end:
