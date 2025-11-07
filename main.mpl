@@ -19,8 +19,10 @@ k;
 t:-WhatLesson();
 k:-TimeSinceMidnight();
 
-a := t - k;
-a := t + k;
+a := t - k:
+a;
+a := t + k:
+a;
 
 
 
